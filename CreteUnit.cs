@@ -464,15 +464,10 @@ public class CreteUnit : MonoBehaviour
     public void OpenBattale()
     {
         pathFile = TBS_Settings.pathFile;
-
         var String_ = File.ReadAllText(pathFile);
         User = "Load";
         var String_JSON = "{" + User + ":" + "[" + String_ + "]" + "}";
-
         jsonObject = SimpleJSON.JSON.Parse(String_JSON);
-
-
-
         UserString = User.ToString();
         int countArrey = jsonObject[UserString].Count;
         for (int i = 0; i < countArrey; i++)
@@ -482,7 +477,6 @@ public class CreteUnit : MonoBehaviour
             {
                 step = i;
                 cellGrid.StartGame();
-
                 break;
             }
             SimpleJSON.JSONNode Unit_name = jsonObject[UserString][i]["UnitName"];
@@ -552,12 +546,10 @@ public class CreteUnit : MonoBehaviour
     {
         step = step + 1;
         Vector3 oldPosition_Spell;
-
         SimpleJSON.JSONNode Command = jsonObject[UserString][step]["command"];
         if (Command != null)
         {
             SimpleJSON.JSONNode Unit_name = jsonObject[UserString][step]["UnitName"];
-
             amount = jsonObject[UserString][step]["amount"];
             if (jsonObject[UserString][step]["position"].ToString() != "[]" && jsonObject[UserString][step]["position"] != null)
             {
@@ -590,12 +582,10 @@ public class CreteUnit : MonoBehaviour
             {
                 var str_path = jsonObject[UserString][step]["path"].ToString();
                 str_path = str_path.Trim(new char[] { '[', ']' });
-
                 var list_point_move_str = str_path.Split(']').Select(s => s.Trim()).ToArray();
                 for (int j = 0; j < list_point_move_str.Length; j++)
                 {
                     list_point_move_str[j] = list_point_move_str[j].Trim(new char[] { ',', '[' });
-
                     path_move.Add(ConvertFromString(list_point_move_str[j]));
                 }
 
@@ -619,9 +609,7 @@ public class CreteUnit : MonoBehaviour
             if (Command == "move")
             {
                 StartCoroutine(MoveUnit(Unit_name, position_tar, path_move, hash_code));
-
             }
-
             if (Command == "attack")
             {
                 string unit_attack = Unit_name;
@@ -768,10 +756,8 @@ public class CreteUnit : MonoBehaviour
     }
     public void TurnResolverLoad()
     {
-
         cellGrid.EndTurnExecute(false);
         StartCoroutine(RunComandCorutin("endturn"));
-
     }
     public IEnumerator RunSpell(Vector3 old_pos)
     {
@@ -786,7 +772,6 @@ public class CreteUnit : MonoBehaviour
         if (Command == "attack")
             yield return new WaitForSeconds(1f);
         if (Command == "str")
-
             yield return new WaitForSeconds(2f);
         if (Command == "runspell")
             yield return new WaitForSeconds(1f);
